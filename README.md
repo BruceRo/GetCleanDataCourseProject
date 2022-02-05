@@ -10,6 +10,8 @@ The repository contains the following relevant files:
 * run_analysis.R; The code to produce a tidy summary data set.
 * CodeBook.md; Explains study design, data, and provides an overview of the code in run_analysis.R.
 
+Note: All code is in the one file, run_analysis.R.
+
 This project uses
 data processed and provided by the following:
 
