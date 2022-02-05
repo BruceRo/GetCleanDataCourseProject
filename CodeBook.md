@@ -70,7 +70,8 @@ for all of these which gives the 66 quantitative variables.
 Now that we have the data we want and the data is tidy and we can produce the 
 summary table. Here we calculate the average for each 
 of the means and standard deviations for each subject in each activity. Therefore, there are 
-180 rows since each of the 30 subjects were recorded in 6 activities. 
+180 rows since each of the 30 subjects were recorded in 6 activities. The columns in the 
+summary are the same as in the main data file and have the same descriptions.
 
 The code to process the data is in the file "run_analysis.R". The script can be run if it
 is in a folder that also contains the folder *UCI HAR Dataset*, from the zip file available here: 
