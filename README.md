@@ -26,4 +26,4 @@ The data is available in the zip file at the following:
 
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-This zip file contains information on how the original data was obtained.
+This zip file contains information on how the original data was obtained and processed.
