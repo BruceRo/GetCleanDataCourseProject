@@ -4,8 +4,7 @@
 
 This repository is for the final project in *Getting and Cleaning Data*.
 
-The repository contains the following files:
-================
+The repository contains the following relevant files:
 
 * README.md
 * run_analysis.R; The code to produce a tidy summary data set.
