@@ -32,9 +32,9 @@ names(df_Xfull) <- column_names
 
 
 # find cols with mean or std with logical vector
-mean_std <- str_detect(column_names, "mean") | str_detect(column_names, "std")
+has_mean_std <- str_detect(column_names, "mean\\(\\)") | str_detect(column_names, "std\\(\\)")
 # filter df_Xfull for columns with mean or std
-df_X <- df_Xfull[, mean_std]
+df_X <- df_Xfull[, has_mean_std]
 
 # clean X column names
 ## remove parentheses
@@ -61,110 +61,20 @@ rm(activity_labels)
 df_Y <- df_Yfull %>% 
   transmute(activity = activity_dict[X1])
 
-# add Y  X and subject data frame
+# join Y,  X, and subject data frames
 df_wide <- bind_cols(subject_full, df_Y, df_X)
 
 # clean
 rm(df_X); rm(df_Xfull); rm(df_Y); rm(df_Yfull)
 
 
-# make long tidy data frame
-df <- df_wide %>% 
-  pivot_longer(-(subject:activity), names_to = "timeFreqVar", values_to = "measurement") 
-
 # summarize
-df_summary <- df %>% 
-  group_by(subject, activity, timeFreqVar) %>% 
-  summarize(mean_measurement = mean(measurement))
-
-df_summary2 <- df_wide %>% 
+df_summary <- df_wide %>% 
   group_by(subject, activity) %>% 
-  summarize(across(1:79, mean))
+  summarize(across(1:66, mean))
+
+# Write summary to file
+write.table(df_summary, "summary_data.txt", row.names = FALSE)
 
 
-
-
-
-
-# rm(df_mean_walking);rm(df_mean_walking_downstairs);rm(df_mean_walking_upstairs)
-# 
-# rm(df_std_walking);rm(df_std_walking_downstairs);rm(df_std_walking_upstairs)
-
-
-
-### separate mean and std to different columns
-
-
-df_mean <- df_wide %>% 
-  select(activity, contains("Mean"))
-# remove Mean from name
-names(df_mean) <- str_remove(names(df_mean), "Mean")
-# pivot to long
-df_mean <- df_mean %>% 
-  pivot_longer(-activity, names_to = "timeFreqVar", values_to = "mean")
-
-df_std <- df_wide %>% 
-  select(activity, contains("Std"))
-# remove Mean from name
-names(df_std) <- str_remove(names(df_std), "Std")
-# pivot to long
-df_std <- df_std %>% 
-  pivot_longer(-activity, names_to = "timeFreqVar", values_to = "std")
-
-
-# break up for memory problems on join
-df_mean_walking <- filter(df_mean, activity == "WALKING")
-df_std_walking <- filter(df_std, activity == "WALKING")
-
-df_mean_walking_upstairs <- filter(df_mean, activity == "WALKING_UPSTAIRS")
-df_std_walking_upstairs <- filter(df_std, activity == "WALKING_UPSTAIRS")
-
-df_mean_walking_downstairs <- filter(df_mean, activity == "WALKING_DOWNSTAIRS")
-df_std_walking_downstairs <- filter(df_std, activity == "WALKING_DOWNSTAIRS")
-
-df_mean_sitting <- filter(df_mean, activity == "SITTING")
-df_std_sitting <- filter(df_std, activity == "SITTING")
-
-df_mean_standing <- filter(df_mean, activity == "STANDING")
-df_std_standing <- filter(df_std, activity == "STANDING")
-
-df_mean_laying <- filter(df_mean, activity == "LAYING")
-df_std_laying <- filter(df_std, activity == "LAYING")
-
-
-
-
-# combine the two data frames
-df_walking <- full_join(df_mean_walking, df_std_walking)
-df_walking_upstairs <- full_join(df_mean_walking_upstairs, df_std_walking_upstairs)
-df_walking_downstairs <- full_join(df_mean_walking_downstairs, df_std_walking_downstairs)
-df_sitting <- full_join(df_mean_sitting, df_std_sitting)
-df_standing <- full_join(df_mean_standing, df_std_standing)
-df_laying <- full_join(df_mean_laying, df_std_laying)
-
-
-
-
-
-
-df2 <- left_join(df_mean, df_std)
-
-
-# calculate mean and standard deviations across columns
-# df_X <- df_Xfull %>% 
-#   rowwise() %>% 
-#   transmute(mean = mean(c_across(1:561)),
-#             sd = sd(c_across(1:561)))
-# rm(df_Xfull)
-# 
-# rm(df_Yfull)
-#   
-# 
-# 
-# rm(df_X); rm(df_Y)
-# 
-# df_summary <- df %>% 
-#   group_by(activity) %>% 
-#   summarize(mean_mean = mean(mean),
-#             mean_sd = mean(sd))
 
