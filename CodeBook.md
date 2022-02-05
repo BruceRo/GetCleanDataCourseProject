@@ -21,7 +21,7 @@ to get X, Y, and subject data for the combined train and test data.
 We then load the *feature.txt* which contains the column names for the X data set so we 
 can add that to the X data. Now we only take the columns that have "mean()" or "std()" in 
 their name.  Now we tidy up the names by removing parentheses, capitalize mean and std for 
-"camelCase" readability, an finally replace abbreviations with full words.
+"camelCase" readability, and finally replace abbreviations with full words.
 
 We next read in the activity labels and recode Y so that it shows the name and not the 
 number for the activity.
@@ -60,13 +60,15 @@ The rest of the data are derived from the following measurements:
 * fBodyGyroMag
 * fBodyGyroJerkMag
 
-These are processed data from the accelerometer and gyroscope measurements. There are separate 
-measurements for X, Y, and Z, for variables that have XYZ in their name.  Variables 
+These are processed data from the accelerometer and gyroscope measurements. For 
+variables that have XYZ in their name, there are separate 
+measurements for X, Y, and Z.  Variables 
 that start with "t" (time) are measured in seconds. Variables that start with "f" (for freqency) 
 are measured in hertz. Finally, the mean and standard deviations are recorded
 for all of these which gives the 66 quantitative variables. 
 
-Now the data is tidy and we can produce the summary table. Here we calculate the average for each 
+Now that we have the data we want and the data is tidy and we can produce the 
+summary table. Here we calculate the average for each 
 of the means and standard deviations for each subject in each activity. Therefore, there are 
 180 rows since each of the 30 subjects were recorded in 6 activities. 
 
